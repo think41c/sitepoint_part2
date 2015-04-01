@@ -1,0 +1,11 @@
+<!--
+Comments don't need to start on the same line with the <!-- but they do need to have it appended to the same line as the last
+line of the comment (or so it seems!)
+
+The @ in slim means to evaluate a Ruby variable. Since @task stored the value of the params[:task] key 
+the display will now show a) The layout.slim saying "Just Do It" and b) Everything after h2 (in the example code below)
+and c) = @task , which is whatever you typed in the URL after the / . The space after the = doesn't matter, the space
+before the equals, in true Slim fashion, absolutely matters. -->
+
+h2 Mah Taskz task.slim
+= @task

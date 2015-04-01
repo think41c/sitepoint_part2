@@ -11,6 +11,7 @@
 require 'sinatra/reloader'  
 require 'sinatra'
 require 'data_mapper'
+require 'slim'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.rb")
 
@@ -32,7 +33,12 @@ get '/:task' do
   slim :task
 end
 
-post '/' do  
-  @task = params[:task]
-  slim :task
+post '/' do
+  Task.create params[:task]   # Now will .create a task, put it to the params[:task] value. 
+  redirect to('/')            # Refreshes the page essentially. Doesn't seem to matter what URL is given.
+end
+
+delete '/task/:id' do 
+  Task.get(params[:id]).destroy
+  redirect to('/')
 end

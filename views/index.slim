@@ -1,11 +1,13 @@
-form action="/" method="POST"   
+form action="/" method="POST"
   input type="text" name="task[name]"
-  input.button type="submit" value="Mah new task->"
-
-h2 My Tasks (from Index.slim)
-
-ul.tasks 
-  - @tasks.each do |task|   # we're in ruby now. Notice the # comment. You have to have the ruby expression preeceded w/ a - 
-    li.task = task.name     
-    end                     <!-- Strangely, the 'end' isn't required. We're also 'out' of Ruby (notice comment style) -->
-                            <!-- The li.task = task.name can't have a comment on it at all for some reason. --> 
+  input.button type="submit" value="Button labelz!"
+ 
+h2 My Tasks
+ 
+ul.tasks
+  - @tasks.each do |task|  # we're in ruby now. Notice the # comment. You have to have the ruby expression preeceded w/ a - 
+    
+    == slim :task, locals: { task: task }
+    <!-- li.task= task.name   (This was originally here just to display all the tasks) -->
+          <!-- Strangely, the 'end' isn't required. We're also 'out' of Ruby (notice comment style) -->
+          <!-- The li.task = task.name can't have a comment on it at all for some reason. -->

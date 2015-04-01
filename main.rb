@@ -1,11 +1,18 @@
 # DataMapper is the ORM (Object Relational Mapping) to interact w/ the database. Similar to Active Record.
 # SQLite is the local database that requires no config.
-# development.db (a non special type of filename, needs to be in the same folder as main.rb)
+# development.db (a non special type of filename, will be created by ruby in the same folder that main.rb is in)
+# The file is created when a database record is created (like in IRB) and stores the info of the database records.
 
+# You can create tasks in IRB by going into IRB and typing:
+# require './main'    
+# Task.auto_migrate!    # this references 'Task', the name of our class. The .auto_migrate! is a built in method
+# Task.create(name: "whatever")   # The .create is a built in method. The "name:" is a symbol we made under 'property' below
+
+require 'sinatra/reloader'  
 require 'sinatra'
 require 'data_mapper'
 
-DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/developement.rb")
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.rb")
 
 class Task
   include DataMapper::Resource
@@ -15,11 +22,8 @@ class Task
 end
 DataMapper.finalize
 
-require 'sinatra'
-require 'sinatra/reloader'  
-require 'slim'
-
 get '/' do 
+  @tasks = Task.all   # gets all tasks from the database, stores into array into @tasks.
   slim :index
 end
 
